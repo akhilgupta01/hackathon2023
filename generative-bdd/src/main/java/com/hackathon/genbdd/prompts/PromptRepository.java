@@ -15,6 +15,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -57,6 +58,10 @@ public class PromptRepository {
             INSTANCE.initialize();
         }
         return INSTANCE;
+    }
+
+    public Optional<Prompt> getByType(String type){
+        return prompts.stream().filter(p -> p.getType().equals(type)).findFirst();
     }
 
     public static void main(String[] args) {

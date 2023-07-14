@@ -8,5 +8,4 @@ public class Prompt {
     private String type;
     private String template;
     private String templateRef;
-    private Gson response;
 }
