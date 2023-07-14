@@ -25,15 +25,27 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class GenerativeBddApplication {
 	public static void main(String[] args) {
+		AIClient client = new AIClient();
 		PromptRepository promptRepository = PromptRepository.getInstance();
-		Prompt scenarioAnalysisPrompt = promptRepository.getByType("ScenarioAnalysis").get();
 
+		//Start the context with scenario text
 		Properties context = new Properties();
 		context.put("scenario_text", readScenario("transaction-aggregation.feature"));
 
-		AIClient client = new AIClient();
+		//Analyze the scenario
+		Prompt scenarioAnalysisPrompt = promptRepository.getByType("ScenarioAnalysis").get();
 		String response = client.query(scenarioAnalysisPrompt, context);
+		updateContext(context, response);
 
+		if(context.getProperty("scenario-type").equals("data-transformation")){
+			//TODO: generateModelClasses(context);
+			//TODO: generateReader(context);
+			//TODO: generateWriter(context);
+			//TODO: generateTransformationClass(context);
+		}
+	}
+
+	private static void updateContext(Properties context, String response) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			JsonNode responseJson = objectMapper.readTree(response);
@@ -41,8 +53,6 @@ public class GenerativeBddApplication {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println(context);
 	}
 
 	private static String readScenario(String fileName) {
@@ -78,6 +88,4 @@ public class GenerativeBddApplication {
 
 		return jsonMap;
 	}
-
-
 }
