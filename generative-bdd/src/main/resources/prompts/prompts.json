@@ -1,0 +1,6 @@
+[
+  {
+    "type":"ScenarioAnalysis",
+    "templateRef": "scenario-analysis.txt"
+  }
+]
