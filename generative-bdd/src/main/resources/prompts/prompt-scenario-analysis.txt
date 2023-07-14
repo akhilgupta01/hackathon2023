@@ -1,0 +1,9 @@
+Analyze the text delimited by triple backticks and provide result as a JSON with following keys.
+- scenario-type (restricted to 'data-transformation', 'data-validation')
+- is-input-available
+- input-data-source-type (restricted to file, database or api)
+- input-data-record-type
+- input-data-record-attributes
+- output-data-record-type
+- output-data-record-attributes
+```${scenario_text}```

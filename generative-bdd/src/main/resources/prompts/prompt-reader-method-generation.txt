@@ -1,0 +1,10 @@
+Generate a Java function
+to read data records of type ${input-data-record-type} with attributes ${input-data-record-attributes}
+from ${input-data-source-type}
+as described in the scenario delimited by triple backticks.
+```${scenario_text}```
+Also, use following instructions to provide the response:
+- Output should have methodName and methodBody in JSON format
+- Method should not be a static method
+- There could be data errors, skip such erroneous records
+- Use Java 8 features

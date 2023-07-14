@@ -1,0 +1,22 @@
+[
+  {
+    "type":"ScenarioAnalysis",
+    "templateRef": "prompt-scenario-analysis.txt"
+  },
+  {
+    "type":"TransformationMethodGeneration",
+    "templateRef": "prompt-generate-transformation.txt"
+  },
+  {
+    "type":"ModelClassGeneration",
+    "templateRef": "prompt-model-class-generation.txt"
+  },
+  {
+    "type":"ReaderMethodGeneration",
+    "templateRef": "prompt-reader-method-generation.txt"
+  },
+  {
+    "type":"WriterMethodGeneration",
+    "templateRef": "prompt-writer-method-generation.txt"
+  }
+]
