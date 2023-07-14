@@ -1,5 +1,6 @@
 package com.hackathon.genbdd;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.javaprop.JavaPropsMapper;
@@ -24,7 +25,7 @@ import java.util.Properties;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class GenerativeBddApplication {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JsonProcessingException {
 		AIClient client = new AIClient();
 		PromptRepository promptRepository = PromptRepository.getInstance();
 
@@ -38,11 +39,18 @@ public class GenerativeBddApplication {
 		updateContext(context, response);
 
 		if(context.getProperty("scenario-type").equals("data-transformation")){
-			//TODO: generateModelClasses(context);
+			generateModelClasses(promptRepository,context);
 			//TODO: generateReader(context);
 			//TODO: generateWriter(context);
 			//TODO: generateTransformationClass(context);
 		}
+	}
+
+	private static void generateModelClasses(PromptRepository promptRepository, Properties context) throws JsonProcessingException {
+		Prompt modelClassGenerationPrompt = promptRepository.getByType("ModelClassGeneration").get();
+		String response = new AIClient().query(modelClassGenerationPrompt, context);
+		Map modelClassMap=transformJsonToMap(new ObjectMapper().readTree(response),"model");
+		System.out.println("ModelMap:"+modelClassMap);
 	}
 
 	private static void updateContext(Properties context, String response) {
