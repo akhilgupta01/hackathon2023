@@ -81,7 +81,7 @@ public class PromptRepository {
                     "  {\n" +
                     "    \"type\":\"ScenarioAnalysis\",\n" +
                     "    \"template\":null,\n" +
-                    "    \"templateRef\": \"scenario-analysis.txt\",\n" +
+                    "    \"templateRef\": \"prompt-scenario-analysis.txt\",\n" +
                     "    \"response\":null\n" +
                     "  }\n" +
                     "]";

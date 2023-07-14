@@ -1,6 +1,10 @@
 [
   {
     "type":"ScenarioAnalysis",
-    "templateRef": "scenario-analysis.txt"
+    "templateRef": "prompt-scenario-analysis.txt"
+  },
+  {
+    "type":"TransformationMethodGeneration",
+    "templateRef": "prompt-generate-transformation.txt"
   }
 ]
