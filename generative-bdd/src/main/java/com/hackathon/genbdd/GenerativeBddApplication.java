@@ -37,7 +37,24 @@ public class GenerativeBddApplication {
 		String response = client.query(scenarioAnalysisPrompt, context);
 		updateContext(context, response);
 
+		for(Prompt prompt: promptRepository.getPrompts()){
+			if(!prompt.getType().equals("ScenarioAnalysis")){
+				String resp = client.query(prompt, context);
+				System.out.println("\n\n\n\n******************************************");
+				System.out.println(resp);
+				try{
+					Thread.sleep(16000);
+				}catch (Exception e){e.printStackTrace();}
+			}
+		}
+
+
 		if(context.getProperty("scenario-type").equals("data-transformation")){
+			//Prompt prompt = promptRepository.getByType("TransformationMethodGeneration").get();
+			//Prompt prompt = promptRepository.getByType("ReaderMethodGeneration").get();
+			//String resp = client.query(prompt, context);
+			//System.out.println(resp);
+
 			//TODO: generateModelClasses(context);
 			//TODO: generateReader(context);
 			//TODO: generateWriter(context);
