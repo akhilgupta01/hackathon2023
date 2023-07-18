@@ -3,8 +3,13 @@ package com.hackathon.genbdd;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.javaprop.JavaPropsMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hackathon.genbdd.aiclient.AIClient;
 import com.hackathon.genbdd.prompts.PromptRepository;
+import com.hackathon.genbdd.prompts.handler.ModelHandler;
 import com.hackathon.genbdd.prompts.model.Prompt;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,22 +40,17 @@ public class GenerativeBddApplication {
 		//Analyze the scenario
 		Prompt scenarioAnalysisPrompt = promptRepository.getByType("ScenarioAnalysis").get();
 		String response = client.query(scenarioAnalysisPrompt, context);
-		updateContext(context, response);
 
-		for(Prompt prompt: promptRepository.getPrompts()){
-			if(!prompt.getType().equals("ScenarioAnalysis")){
-				String resp = client.query(prompt, context);
-				System.out.println("\n\n\n\n******************************************");
-				System.out.println(resp);
-				try{
-					Thread.sleep(16000);
-				}catch (Exception e){e.printStackTrace();}
-			}
-		}
+		//Parse the response
+		JsonElement jsonelement = JsonParser.parseString(response);
+		JsonObject jsonObject = jsonelement.getAsJsonObject();
+
+		//Generate Model classes
+		ModelHandler modelHandler = new ModelHandler(promptRepository);
+		modelHandler.handle(jsonObject);
 
 
-		if(context.getProperty("scenario-type").equals("data-transformation")){
-			//Prompt prompt = promptRepository.getByType("TransformationMethodGeneration").get();
+
 			//Prompt prompt = promptRepository.getByType("ReaderMethodGeneration").get();
 			//String resp = client.query(prompt, context);
 			//System.out.println(resp);
@@ -59,7 +59,7 @@ public class GenerativeBddApplication {
 			//TODO: generateReader(context);
 			//TODO: generateWriter(context);
 			//TODO: generateTransformationClass(context);
-		}
+		//}
 	}
 
 	private static void updateContext(Properties context, String response) {

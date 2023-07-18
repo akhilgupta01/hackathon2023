@@ -1,7 +1,6 @@
-Generate a Java class with following specification.
-- Class Name = ${input-data-record-type} (convert to camel case)
-- Attributes = ${input-data-record-attributes}
+Generate a Java class as described by the JSON object delimited by triple backticks.
+```${data-entity-json}```
+Follow the instructions below to provide the response:
 - Do not provide any constructor or the getter and setter methods use lombok @Data annotation instead
 - Provide any required maven dependencies with group, artifact and version
-Also, use following instructions to provide the response:
-- Output should have className, classImports, classBody, mavenDependencies in JSON format
+- Provide result as a JSON object with following attributes: className, classImports, classBody and mavenDependencies
