@@ -19,21 +19,26 @@ public class ModelHandler implements PromptResponseHandler{
         this.promptRepository = promptRepository;
     }
 
-    public void handle(JsonObject context){
-        generateDataEntities(context, "input-data-entities");
-        generateDataEntities(context, "output-data-entities");
+    public void handle(Properties context){
+        JsonObject scenarioAnalysis = (JsonObject) context.get("scenario-analysis");
+        generateDataEntity(scenarioAnalysis.get("input-data-entity").toString());
+        generateDataEntity(scenarioAnalysis.get("output-data-entity").toString());
+    }
+
+    private void generateDataEntity(String entity) {
+        Prompt prompt = promptRepository.getByType("ModelClassGeneration").get();
+        Properties properties = new Properties();
+        properties.put("data-entity-json", entity);
+        AIClient client = new AIClient();
+        String resp = client.query(prompt, properties);
+        ClassGenerator classGenerator = new ClassGenerator();
+        classGenerator.generateJavaClass("C:\\Users\\Akhil\\IdeaProjects\\hackathon2023\\generative-bdd\\target\\", resp);
     }
 
     private void generateDataEntities(JsonObject context, String entityCollection) {
         JsonArray inputEntities = context.getAsJsonArray(entityCollection);
         inputEntities.iterator().forEachRemaining(entity -> {
-            Prompt prompt = promptRepository.getByType("ModelClassGeneration").get();
-            Properties properties = new Properties();
-            properties.put("data-entity-json", entity.toString());
-            AIClient client = new AIClient();
-            String resp = client.query(prompt, properties);
-            ClassGenerator classGenerator = new ClassGenerator();
-            classGenerator.generateJavaClass("C:\\Users\\Akhil\\IdeaProjects\\hackathon2023\\generative-bdd\\target\\", resp);
+            generateDataEntity(entity.toString());
         });
     }
 }

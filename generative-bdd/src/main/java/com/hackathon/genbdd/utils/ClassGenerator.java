@@ -24,7 +24,7 @@ public class ClassGenerator {
 
         // Add class body
         sb.append(spec.getClassBody()).append("\n");
-
+        System.out.println("\n\n\n\n\n*************************" + sb);
         saveToFile(filePath + "//" + spec.getClassName() + ".java", sb.toString());
     }
 

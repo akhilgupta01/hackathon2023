@@ -23,6 +23,11 @@ public class AIClient {
         return sb.reverse().substring(1);
     }
 
+    public static void main(String[] args) {
+        AIClient client = new AIClient();
+        System.out.println(client.getKey());
+    }
+
     private RestTemplate restTemplate() {
         if (restTemplate == null) {
             restTemplate = new RestTemplate();

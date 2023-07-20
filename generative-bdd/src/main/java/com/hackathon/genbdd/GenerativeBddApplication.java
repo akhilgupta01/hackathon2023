@@ -10,6 +10,7 @@ import com.google.gson.JsonParser;
 import com.hackathon.genbdd.aiclient.AIClient;
 import com.hackathon.genbdd.prompts.PromptRepository;
 import com.hackathon.genbdd.prompts.handler.ModelHandler;
+import com.hackathon.genbdd.prompts.handler.TransformationHandler;
 import com.hackathon.genbdd.prompts.model.Prompt;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,7 +36,7 @@ public class GenerativeBddApplication {
 
 		//Start the context with scenario text
 		Properties context = new Properties();
-		context.put("scenario_text", readScenario("transaction-aggregation.feature"));
+		context.put("scenario-text", readScenario("transaction-aggregation.feature"));
 
 		//Analyze the scenario
 		Prompt scenarioAnalysisPrompt = promptRepository.getByType("ScenarioAnalysis").get();
@@ -44,14 +45,19 @@ public class GenerativeBddApplication {
 		//Parse the response
 		JsonElement jsonelement = JsonParser.parseString(response);
 		JsonObject jsonObject = jsonelement.getAsJsonObject();
+		context.put("scenario-analysis", jsonObject);
 
 		//Generate Model classes
 		ModelHandler modelHandler = new ModelHandler(promptRepository);
-		modelHandler.handle(jsonObject);
+		modelHandler.handle(context);
+
+		//Generate Transformation
+		TransformationHandler transformationHandler = new TransformationHandler(promptRepository);
+		transformationHandler.handle(context);
 
 
 
-			//Prompt prompt = promptRepository.getByType("ReaderMethodGeneration").get();
+		//Prompt prompt = promptRepository.getByType("ReaderMethodGeneration").get();
 			//String resp = client.query(prompt, context);
 			//System.out.println(resp);
 

@@ -9,7 +9,7 @@ import java.util.List;
 public class ChatRequest {
     private String model;
     private List<Message> messages;
-    private double temperature;
+    private double temperature = 0;
 
     public ChatRequest(String prompt) {
         this("gpt-3.5-turbo", prompt);
