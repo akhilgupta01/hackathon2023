@@ -1,8 +1,8 @@
 Analyze the expected application behaviour as described by the text delimited by triple backticks
 and provide result as a JSON object with following attributes.
 - scenario-type (restricted to 'data-transformation', 'data-validation')
-- input-data-source-type (restricted to file, database or api)
+- input-data-source-type (restricted to csv-file, database or api)
 - input-data-entity (as a json object with attributes entity-name and an array of attribute names with their data types)
-- output-data-sink-type (restricted to file, database or api)
+- output-data-sink-type (restricted to csv-file, database or api)
 - output-data-entity (as a json object with attributes entity-name and an array of attribute names with their data types)
 ```${scenario-text}```

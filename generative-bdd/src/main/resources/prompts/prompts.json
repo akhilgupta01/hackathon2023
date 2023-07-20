@@ -12,15 +12,11 @@
     "templateRef": "prompt-model-class-generation.txt"
   },
   {
-    "type":"Model2ClassGeneration",
-    "templateRef": "prompt-model2-class-generation.txt"
-  },
-  {
-    "type":"ReaderMethodGeneration",
+    "type":"ReaderClassGeneration",
     "templateRef": "prompt-reader-method-generation.txt"
   },
   {
-    "type":"WriterMethodGeneration",
+    "type":"WriterClassGeneration",
     "templateRef": "prompt-writer-method-generation.txt"
   }
 ]

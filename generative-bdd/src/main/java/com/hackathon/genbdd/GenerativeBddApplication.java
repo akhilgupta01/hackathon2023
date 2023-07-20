@@ -10,7 +10,9 @@ import com.google.gson.JsonParser;
 import com.hackathon.genbdd.aiclient.AIClient;
 import com.hackathon.genbdd.prompts.PromptRepository;
 import com.hackathon.genbdd.prompts.handler.ModelHandler;
+import com.hackathon.genbdd.prompts.handler.ReaderHandler;
 import com.hackathon.genbdd.prompts.handler.TransformationHandler;
+import com.hackathon.genbdd.prompts.handler.WriterHandler;
 import com.hackathon.genbdd.prompts.model.Prompt;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -55,6 +57,13 @@ public class GenerativeBddApplication {
 		TransformationHandler transformationHandler = new TransformationHandler(promptRepository);
 		transformationHandler.handle(context);
 
+		//Reader Class Generation
+		ReaderHandler readerHandler = new ReaderHandler(promptRepository);
+		readerHandler.handle(context);
+
+		//Writer Class Generation
+		WriterHandler writerHandler = new WriterHandler(promptRepository);
+		writerHandler.handle(context);
 
 
 		//Prompt prompt = promptRepository.getByType("ReaderMethodGeneration").get();
