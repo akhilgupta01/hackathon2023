@@ -17,8 +17,8 @@ public class ClassGenerator {
         StringBuilder sb = new StringBuilder();
 
         // Add class imports
-        for (String classImport : spec.getClassImports()) {
-            sb.append(classImport).append("\n");
+        for (String importStatement : spec.getImportStatements()) {
+            sb.append(importStatement).append("\n");
         }
         sb.append("\n");
 
@@ -40,15 +40,14 @@ public class ClassGenerator {
     @Data
     static class ClassSpecification {
         private String className;
-        private List<String> classImports;
+        private List<String> importStatements;
         private String classBody;
 
         @SneakyThrows
         public static ClassSpecification fromJson(String json) {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            ClassSpecification classSpecification = objectMapper.readValue(json, ClassSpecification.class);
-            return classSpecification;
+            return objectMapper.readValue(json, ClassSpecification.class);
         }
     }
 }

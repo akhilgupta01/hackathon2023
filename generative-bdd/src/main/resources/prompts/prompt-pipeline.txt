@@ -1,0 +1,17 @@
+Various parts of a Java class represented in a JSON format with attributes as className, importStatements, classBody and mavenDependencies
+to read, transform and write Java objects described by the JSON ${input-data-entity}
+to Java objects described by JSON ${output-data-entity}
+as per the example scenario delimited by triple backticks.
+```${scenario-text}```
+wiring the following sample methods together to achieve the desired result
+- for reading the input data ${reader}
+- for transformation ${transformation}
+- for writing the output records ${writer}
+and using following assumptions
+- using Java 8 features
+- classBody should be represented as a single line
+- maven dependency (if any) should be in format groupId:artifactId:version
+- model entities already exist
+- lombok builder pattern to be used to construct model entities
+- has a main method that wires the read, transform and write methods
+will be as follows:

@@ -1,6 +1,5 @@
 package com.hackathon.genbdd.aiclient;
 
-import com.hackathon.genbdd.Context;
 import com.hackathon.genbdd.prompts.model.Prompt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +11,34 @@ import java.util.Properties;
 public class AIClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(AIClient.class);
 
-    private String apiUrl = "https://api.openai.com/v1/chat/completions";
+    private static final String apiUrl = "https://api.openai.com/v1/chat/completions";
 
     private RestTemplate restTemplate;
 
-    private PropertyPlaceholderHelper propertyPlaceholderHelper = new PropertyPlaceholderHelper("${", "}");
+    private final PropertyPlaceholderHelper propertyPlaceholderHelper = new PropertyPlaceholderHelper("${", "}");
+
+    private long lastRequestMillis = 0L;
+
+    private static final AIClient INSTANCE = new AIClient();
+
+    public static AIClient getInstance(){
+        return INSTANCE;
+    }
+
+    private AIClient(){}
+
+    private void waitIfNecessary(){
+        long currentTimeMillis = System.currentTimeMillis();
+        if((currentTimeMillis - lastRequestMillis) < 20_000){
+            try{
+                LOGGER.debug("Waiting for " + (20_000 - (currentTimeMillis - lastRequestMillis)) + " millis");
+                Thread.sleep(20_000 - (currentTimeMillis - lastRequestMillis));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        lastRequestMillis = System.currentTimeMillis();
+    }
 
     private String getKey() {
         StringBuilder sb = new StringBuilder("raioT3n62994kqdgmIYiJFkblB3ToBnz8AN6zPEbY0oHAxLR-ksa");
@@ -40,10 +62,10 @@ public class AIClient {
     }
 
     public String query(Prompt prompt, Properties context) {
-
+        waitIfNecessary();
         String promptMessage = prompt.getTemplate();
         promptMessage = propertyPlaceholderHelper.replacePlaceholders(promptMessage, context);
-        System.out.println(promptMessage);
+        LOGGER.info("\n\n\n\nPrompt Message:\n" + promptMessage);
 
         ChatRequest request = new ChatRequest(promptMessage);
         ChatResponse response = restTemplate().postForObject(apiUrl, request, ChatResponse.class);
@@ -53,6 +75,8 @@ public class AIClient {
         }
 
         // return the first response
-        return response.getChoices().get(0).getMessage().getContent();
+        String responseContent = response.getChoices().get(0).getMessage().getContent();
+        LOGGER.info("\n\nResponse:\n" + responseContent);
+        return responseContent;
     }
 }

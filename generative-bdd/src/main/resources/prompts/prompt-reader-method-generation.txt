@@ -1,4 +1,4 @@
-A Java class represented in JSON format (with attributes className, classImports, classBody and mavenDependencies)
+A Java class represented in JSON format (with attributes className, classImports, methodSignatures, classBody and mavenDependencies)
 to read Java objects described by the JSON ${input-data-entity} from a ${input-data-source-type}
 Using following assumptions
 - using Java 8 features

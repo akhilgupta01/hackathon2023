@@ -1,6 +1,9 @@
-Generate a Java class as described by the JSON object delimited by triple backticks.
+Various parts of a Java class (represented in a JSON format with attributes as className, importStatements, classBody and mavenDependencies)
+that represents a model entity with name and attributes as described by the following JSON delimited by triple backticks.
 ```${data-entity-json}```
-Follow the instructions below to provide the response:
-- Do not provide any constructor or the getter and setter methods use lombok @Data annotation instead
-- Provide any required maven dependencies with group, artifact and version
-- Provide result as a JSON object with following attributes: className, classImports, classBody and mavenDependencies
+and using following assumptions
+- using Java 8 features
+- classBody should be represented as a single line
+- maven dependency (if any) should be in format groupId:artifactId:version
+- using Lombok annotations like @Data, @Builder etc. instead of constructors
+will be as follows:

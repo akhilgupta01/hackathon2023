@@ -1,40 +1,36 @@
 package com.hackathon.genbdd.prompts.handler;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hackathon.genbdd.aiclient.AIClient;
 import com.hackathon.genbdd.prompts.PromptRepository;
-import com.hackathon.genbdd.prompts.model.Prompt;
-import com.hackathon.genbdd.utils.ClassGenerator;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Properties;
 
+
 @Data
-public class ReaderHandler implements PromptResponseHandler{
+public class ReaderHandler implements PromptResponseHandler {
     private PromptRepository promptRepository;
 
-    public ReaderHandler(PromptRepository promptRepository){
+    public ReaderHandler(PromptRepository promptRepository) {
         this.promptRepository = promptRepository;
     }
 
 
-    public void handle(Properties context){
-        JsonObject scenarioAnalysis = (JsonObject) context.get("scenario-analysis");
-        if(StringUtils.isNotBlank(scenarioAnalysis.get("input-data-source-type").getAsString())){
-            Prompt prompt = promptRepository.getByType("ReaderClassGeneration").get();
+    public void handle(Properties context) {
+        if (StringUtils.isNotBlank(String.valueOf(context.get("input-data-source-type").toString()))) {
+            promptRepository.getByType("ReaderClassGeneration").ifPresent(prompt -> {
+                AIClient client = AIClient.getInstance();
+                String response = client.query(prompt, context);
 
-            Properties properties = new Properties();
-            properties.put("input-data-entity", scenarioAnalysis.get("input-data-entity").toString());
-            properties.put("input-data-source-type", scenarioAnalysis.get("input-data-source-type").toString());
-
-            AIClient client = new AIClient();
-            String resp = client.query(prompt, properties);
-            System.out.println(resp);
-            ClassGenerator classGenerator = new ClassGenerator();
-            classGenerator.generateJavaClass("C:\\Users\\Akhil\\IdeaProjects\\hackathon2023\\generative-bdd\\target\\", resp);
+                //Parse the response
+                JsonElement jsonelement = JsonParser.parseString(response);
+                JsonObject jsonObject = jsonelement.getAsJsonObject();
+                context.put("reader", jsonObject.get("classBody").toString());
+            });
         }
     }
-
-
 }

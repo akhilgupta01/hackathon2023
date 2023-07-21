@@ -18,5 +18,9 @@
   {
     "type":"WriterClassGeneration",
     "templateRef": "prompt-writer-method-generation.txt"
+  },
+  {
+    "type":"PipelineGeneration",
+    "templateRef": "prompt-pipeline.txt"
   }
 ]

@@ -10,22 +10,25 @@ import lombok.Data;
 import java.util.Properties;
 
 @Data
-public class TransformationHandler implements PromptResponseHandler {
+public class ScenarioAnalysisHandler implements PromptResponseHandler {
     private PromptRepository promptRepository;
 
-    public TransformationHandler(PromptRepository promptRepository) {
+    public ScenarioAnalysisHandler(PromptRepository promptRepository) {
         this.promptRepository = promptRepository;
     }
 
+
     public void handle(Properties context) {
-        promptRepository.getByType("TransformationMethodGeneration").ifPresent(prompt -> {
+        promptRepository.getByType("ScenarioAnalysis").ifPresent(prompt -> {
             AIClient client = AIClient.getInstance();
             String response = client.query(prompt, context);
 
             //Parse the response
             JsonElement jsonelement = JsonParser.parseString(response);
             JsonObject jsonObject = jsonelement.getAsJsonObject();
-            context.put("transformation", jsonObject.get("classBody").toString());
+            for(String key: jsonObject.keySet()){
+                context.put(key, jsonObject.get(key).toString());
+            }
         });
     }
 }
