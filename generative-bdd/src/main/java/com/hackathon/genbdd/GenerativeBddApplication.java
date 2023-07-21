@@ -20,7 +20,7 @@ public class GenerativeBddApplication {
 
 		//Start the context with scenario text
 		Properties context = new Properties();
-		context.put("scenario-text", readScenario("transaction-aggregation.feature"));
+		context.put("scenario-text", readScenario("student-fees-aggregation.feature"));
 
 		//Analyze the scenario
 		ScenarioAnalysisHandler scenarioAnalysisHandler = new ScenarioAnalysisHandler(promptRepository);
