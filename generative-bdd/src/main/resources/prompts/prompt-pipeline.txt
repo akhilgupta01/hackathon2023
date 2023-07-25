@@ -8,8 +8,8 @@ wiring the following sample methods together to achieve the desired result
 and using following assumptions
 - must have a main method that wires the read, transform and write methods
 - lombok builder pattern should be used to build model entities
-- input model class already exist and is described by the JSON ${input-data-entity}
-- output model class already exist and is described by JSON ${output-data-entity}
+- using existing input model class, described by the JSON ${input-data-entity}
+- using existing output model class, described by JSON ${output-data-entity}
 represented as a JSON with properties:
 - className
 - importStatements (as array of import statements)
