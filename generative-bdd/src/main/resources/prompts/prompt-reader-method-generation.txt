@@ -1,8 +1,8 @@
 A Java class represented in JSON format (with attributes className, classImports, methodSignatures, classBody and mavenDependencies)
-to read Java objects described by the JSON ${input-data-entity} from a ${input-data-source-type}
+to read Java objects from a ${input-data-source-type}
 Using following assumptions
 - using Java 8 features
 - classBody should be represented as a single line
-- maven dependency should be in format groupId:artifactId:version
-- model entities already exist
- will be as follows:
+- maven dependency (if any) should be in format groupId:artifactId:version
+- model entity already exist and is described by the JSON ${input-data-entity}
+will be as follows:

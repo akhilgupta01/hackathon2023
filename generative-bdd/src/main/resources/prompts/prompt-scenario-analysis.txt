@@ -2,7 +2,7 @@ Analyze the expected application behaviour as described by the text delimited by
 and provide result as a JSON object with following attributes.
 - scenario-type (restricted to 'data-transformation', 'data-validation')
 - input-data-source-type (restricted to csv-file, database or api)
-- input-data-entity (as a json object with attributes entity-name and an array of attribute names with their data types)
+- input-data-entity (as a json object with attributes entity-name and an array of attribute names with their Java data types)
 - output-data-sink-type (restricted to csv-file, database or api)
-- output-data-entity (as a json object with attributes entity-name and an array of attribute names with their data types)
+- output-data-entity (as a json object with attributes entity-name and an array of attribute names with their Java data types)
 ```${scenario-text}```

@@ -1,11 +1,11 @@
-A Java class represented in JSON format (with attributes className, classImports, methodSignatures, classBody and mavenDependencies)
-to transform Java objects described by the JSON ${input-data-entity}
-to Java objects described by JSON ${output-data-entity}
+A transformation method in Java to transform Java objects from input data model to output data model
 as per the example scenario delimited by triple backticks.
 ```${scenario-text}```
-Using following assumptions
+With following assumptions
 - using Java 8 features
 - classBody should be represented as a single line
-- maven dependency should be in format groupId:artifactId:version
-- model entities already exist
+- maven dependency (if any) should be in format groupId:artifactId:version
+- input model class already exist and is described by the JSON ${input-data-entity}
+- output model class already exist and is described by JSON ${output-data-entity}
+represented as a JSON (with properties as: className, classImports, methodSignatures, classBody and mavenDependencies)
 will be as follows:
