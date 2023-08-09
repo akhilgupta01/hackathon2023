@@ -1,0 +1,19 @@
+A Java class represented to read, transform and write Java objects from input data model to output data model
+as per the example scenario delimited by triple backticks.
+```${scenario-text}```
+wiring the following sample methods together to achieve the desired result
+- for reading the input data ${reader}
+- for transformation ${transformation}
+- for writing the output records ${writer}
+and using following assumptions
+- must have a main method that wires the read, transform and write methods
+- lombok builder pattern should be used to build model entities
+- using existing input model class, described by the JSON ${input-data-entity}
+- using existing output model class, described by JSON ${output-data-entity}
+represented as a JSON with properties:
+- className
+- importStatements (as array of import statements)
+- methodSignatures (array of signature of the methods used in the class)
+- classBody (as a single line, and not as array)
+- mavenDependencies (if any, in format groupId:artifactId:version)
+will be as follows:

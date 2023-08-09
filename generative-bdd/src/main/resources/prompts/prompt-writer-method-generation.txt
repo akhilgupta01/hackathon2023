@@ -1,0 +1,8 @@
+A Java class represented in JSON format (with attributes className, classImports, classBody, methodSignatures and mavenDependencies)
+to write Java objects described by the JSON ${output-data-entity} to a ${output-data-sink-type}
+Using following assumptions
+- using Java 8 features
+- classBody should be represented as a single line
+- maven dependency (if any) should be in format groupId:artifactId:version
+- model entities already exist
+will be as follows:

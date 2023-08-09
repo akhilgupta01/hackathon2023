@@ -1,0 +1,9 @@
+Various parts of a Java class (represented in a JSON format with attributes as className, importStatements, classBody and mavenDependencies)
+that represents a model entity with name and attributes as described by the following JSON delimited by triple backticks.
+```${data-entity-json}```
+and using following assumptions
+- using Java 8 features
+- classBody should be represented as a single line
+- maven dependency (if any) should be in format groupId:artifactId:version
+- using Lombok annotations like @Data, @Builder etc. instead of constructors
+will be as follows:
